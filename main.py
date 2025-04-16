@@ -9,7 +9,7 @@ from typing import Dict, List, Tuple, Any, Optional
 # --- Page Configuration (MUST be the first Streamlit command) ---
 st.set_page_config(
     layout="wide",
-    page_title="CineSage Recommender",
+    page_title="MovieAtlas",
     page_icon="🍿"
 )
 
