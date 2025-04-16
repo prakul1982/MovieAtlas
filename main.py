@@ -269,7 +269,7 @@ def main():
     apply_custom_css()
     initialize_session_state()
 
-    st.title("🍿 Movie Atlas")
+    st.title("🍿 allaooaoa")
 
     # --- Sidebar ---
     with st.sidebar:
