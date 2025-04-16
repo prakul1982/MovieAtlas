@@ -282,7 +282,6 @@ def main():
             "Select Original Language(s):",
             LANGUAGE_OPTIONS,
             default=["Any"],
-            help="Filter movies based on their original spoken language."
         )
 
         actor_name = st.text_input("Search Actor:", placeholder="e.g., Tom Hanks", key="actor_search_input")
