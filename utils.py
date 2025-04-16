@@ -5,7 +5,7 @@ from PIL import Image
 from io import BytesIO
 import requests
 from requests.exceptions import RequestException
-from typing import Optional # Added for type hinting
+from typing import Optional
 
 try:
     from config import IMAGE_BASE_URL
@@ -21,13 +21,13 @@ def _display_poster(poster_path: str | None):
             response = requests.get(image_url, timeout=10)
             response.raise_for_status()
             image = Image.open(BytesIO(response.content))
-            st.image(image, use_column_width=True, output_format='JPEG')
+            # *** UPDATED st.image call ***
+            st.image(image, use_container_width=True, output_format='JPEG')
         except RequestException as e:
             st.warning(f"⚠️ Could not load image: {e}", icon="🖼️")
-        except Exception as img_err: # Catch potential PIL errors
+        except Exception as img_err:
             st.warning(f"⚠️ Error processing image: {img_err}", icon="🖼️")
     else:
-        # Using st.markdown for placeholder to allow CSS styling from main.py
         st.markdown("<div class='no-poster-available' style='height: 450px;'>No Poster Available</div>", unsafe_allow_html=True)
 
 def _format_runtime(runtime: int | None) -> str:
@@ -40,7 +40,6 @@ def _format_runtime(runtime: int | None) -> str:
         return f"{minutes}m"
     return "N/A"
 
-# Renamed: Removed leading underscore
 def format_rating(rating: float | None, vote_count: int | None) -> str:
     """Formats rating and vote count."""
     if rating and isinstance(rating, (int, float)) and rating > 0:
@@ -59,24 +58,22 @@ def display_movie_details(movie: dict):
     title = movie.get('title', movie.get('name', 'No Title Available'))
     st.header(f"🎬 {title}")
 
-    col1, col2 = st.columns([1, 2]) # Ratio 1:2 for poster:details
+    col1, col2 = st.columns([1, 2])
 
     with col1:
-        _display_poster(movie.get('poster_path')) # Keep internal helper for poster
+        _display_poster(movie.get('poster_path'))
 
     with col2:
         st.subheader("Details")
 
-        # Prepare details data
         release_date = movie.get('release_date', '')
         genres = [genre['name'] for genre in movie.get('genres', [])]
 
         details_map = {
             "🗓️ Release Year": release_date[:4] if release_date and len(release_date) >= 4 else 'N/A',
             "🎭 Genres": ', '.join(genres) if genres else 'N/A',
-             # Use the renamed public function here as well
             "⭐ Rating": format_rating(movie.get('vote_average'), movie.get('vote_count')),
-            "⏱️ Runtime": _format_runtime(movie.get('runtime')), # Keep internal helper for runtime
+            "⏱️ Runtime": _format_runtime(movie.get('runtime')),
             "💬 Tagline": f"<i>{movie.get('tagline')}</i>" if movie.get('tagline') else None
         }
 
