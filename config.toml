@@ -1,0 +1,6 @@
+[theme]
+primaryColor="#1976D2"  # A cool blue
+backgroundColor="#000000" # Black background
+secondaryBackgroundColor="#1E1E1E" # Dark gray secondary background
+textColor="#FFFFFF" # White text
+font="sans serif"
