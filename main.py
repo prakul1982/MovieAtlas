@@ -282,6 +282,7 @@ def main():
             "Select Original Language(s):",
             LANGUAGE_OPTIONS,
             default=["Any"],
+            help="Filter movies based on their original spoken language."
         )
 
         actor_name = st.text_input("Search Actor:", placeholder="e.g., Tom Hanks", key="actor_search_input")
@@ -390,7 +391,8 @@ def main():
                     st.markdown(f"<p>{html.escape(title)}</p>", unsafe_allow_html=True)
 
                     if poster_path and IMAGE_BASE_URL:
-                         st.image(f"{IMAGE_BASE_URL}{poster_path}", use_column_width='always')
+                         # *** UPDATED st.image call ***
+                         st.image(f"{IMAGE_BASE_URL}{poster_path}", use_container_width=True)
                     else:
                          st.markdown(f"<div class='no-poster-available'>No Poster</div>", unsafe_allow_html=True)
 
